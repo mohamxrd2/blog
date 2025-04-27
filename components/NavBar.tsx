@@ -4,6 +4,7 @@ import { ModeToggle } from "./ui/mode-teme";
 import SearchInput from "./ui/SearchInput";
 import Notification from "./ui/notification";
 import UserButton from "./UserButton";
+import Link from "next/link";
 
 const NavBar = () => {
   return (
@@ -26,6 +27,10 @@ const NavBar = () => {
             <ModeToggle />
             <Notification />
             <UserButton />
+            <div className="flex gap-2">
+                <Link href='/login'>Login</Link>
+                <Link href='/register'>Register</Link>
+            </div>
           </div>
         </div>
       </Container>

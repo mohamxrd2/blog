@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Blog dev",
   description: "Your favorite web dev blog",
-  icons: {icon: '/logo.svg'}
+  icons: { icon: "/logo.svg" },
 };
 
 export default function RootLayout({
@@ -30,21 +30,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen `}
       >
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-        <NavBar />
-        <main className="flex-grow">
-        {children}
-
-        </main>
-
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <NavBar />
+          <main className="flex-grow">{children}</main>
         </ThemeProvider>
-
-       
       </body>
     </html>
   );
