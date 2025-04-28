@@ -1,9 +1,13 @@
-import React from 'react'
+import LoginForm from "@/components/auth/LoginForm";
+import Container from "@/components/Container";
+import React from "react";
 
-type Props = {}
-
-export default function Login({}: Props) {
+export default function Login() {
   return (
-    <div>Login</div>
-  )
+    <div>
+      <Container>
+        <LoginForm />
+      </Container>
+    </div>
+  );
 }

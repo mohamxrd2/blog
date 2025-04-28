@@ -1,9 +1,11 @@
-import React from 'react'
+import RegisterForm from "@/components/auth/RegisterForm";
+import Container from "@/components/Container";
+import React from "react";
 
-type Props = {}
-
-export default function Register({}: Props) {
+export default function Register() {
   return (
-    <div>Register</div>
-  )
+    <Container>
+      <RegisterForm />
+    </Container>
+  );
 }
