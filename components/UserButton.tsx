@@ -8,7 +8,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Bookmark, LogOut, Pencil, Shield, User, UserRound } from "lucide-react";
+import {
+  Bookmark,
+  LogOut,
+  Pencil,
+  Shield,
+  User,
+  UserRound,
+} from "lucide-react";
+import {  signOut } from "next-auth/react";
 
 const UserButton = () => {
   return (
@@ -38,8 +46,10 @@ const UserButton = () => {
           <Shield size={18} /> Admin
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="flex items-center gap-2 text-destructive">
-          <LogOut size={18} /> Sign Out
+        <DropdownMenuItem >
+          <button onClick={() => signOut()} className="flex items-center gap-2 text-destructive">
+            <LogOut size={18} /> Sign Out
+          </button>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

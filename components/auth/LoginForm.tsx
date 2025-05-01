@@ -2,15 +2,19 @@
 
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod"; // bien écrit "zodResolver"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { LoginFormType, LoginSchemas } from "@/schemas/LoginSchemas";
 import FormField from "../common/FormField";
 import Button from "../common/Button";
 import { LogInIcon } from "lucide-react";
 import Hedding from "../common/Hedding";
 import SocialAuth from "./SocialAuth";
+import { login } from "@/actions/auth/login";
 
 export default function LoginForm() {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -19,21 +23,26 @@ export default function LoginForm() {
     resolver: zodResolver(LoginSchemas),
   });
 
-  const [isLoading, setIsLoading] = useState(false); // <-- on ajoute ça
+  const [isLoading, setIsLoading] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
+  const [formSuccess, setFormSuccess] = useState<string | null>(null);
 
   const onSubmit = async (data: LoginFormType) => {
-    try {
-      setIsLoading(true); // Quand on soumet => Loading true
+    setIsLoading(true);
+    setFormError(null);
+    setFormSuccess(null);
 
-      // Simulation d'une requête (remplace ici par ton appel API)
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+    const res = await login(data);
 
-      console.log(data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false); // Quand la requête finit => Loading false
+    if (res?.error) {
+      setFormError(res.error);
+    } else if (res?.success) {
+      setFormSuccess(res.success);
+      // Rediriger vers l'URL de redirection
+      router.push(res.redirect || "/");
     }
+
+    setIsLoading(false);
   };
 
   return (
@@ -41,13 +50,15 @@ export default function LoginForm() {
       onSubmit={handleSubmit(onSubmit)}
       className="space-y-6 flex flex-col max-w-[500px] mx-auto mt-8"
     >
-        <Hedding title="Login to Bog dev" center lg />
+      <Hedding title="Login to Bog dev" center lg />
+
+     
+
       <FormField
         id="email"
         register={register}
         errors={errors.email}
         placeholder="Email"
-      
       />
       <FormField
         id="password"
@@ -55,17 +66,27 @@ export default function LoginForm() {
         register={register}
         errors={errors.password}
         placeholder="Mot de passe"
-    
       />
       <Button
         type="submit"
-        label={isLoading ? "Connexion..." : "Login"} // Change de texte si loading
-        loading={isLoading} // On envoie l'état de loading
+        label={isLoading ? "Connexion..." : "Login"}
+        loading={isLoading}
         outlined={true}
-        iconType= {<LogInIcon size={18} />}
+        iconType={<LogInIcon size={18} />}
       />
-      <div className="flex justify-center  mb-4">Or</div>
-      <SocialAuth/>
+
+{formError && (
+        <div className="flex items-center justify-center gap-2 bg-red-50 border border-red-300 text-red-700 px-4 py-3 rounded-lg text-sm shadow-md animate-fade-in">
+        <span>{formError}</span>
+      </div>
+      )}
+      {formSuccess && (
+         <div className="flex items-center justify-center gap-2 bg-green-50 border border-green-300 text-green-700 px-4 py-3 rounded-lg text-sm shadow-md animate-fade-in">
+         <span>{formSuccess}</span>
+       </div>
+      )}
+      <div className="flex justify-center mb-4">Or</div>
+      <SocialAuth />
     </form>
   );
 }

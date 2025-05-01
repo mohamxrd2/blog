@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
 import { ThemeProvider } from "@/components/theme-provider";
+import Container from "@/components/Container";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import { SessionProvider } from "next-auth/react";
+import { auth } from "@/auth";
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -20,15 +19,17 @@ export const metadata: Metadata = {
   icons: { icon: "/logo.svg" },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth()
   return (
-    <html lang="en" suppressHydrationWarning>
+    <SessionProvider session={session}>
+        <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen `}
+        className={`${inter.variable} antialiased flex flex-col min-h-screen`}
       >
         <ThemeProvider
           attribute="class"
@@ -37,9 +38,14 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <NavBar />
-          <main className="flex-grow">{children}</main>
+          <main className="flex-grow">
+            <Container>{children}</Container>
+          </main>
         </ThemeProvider>
       </body>
     </html>
+
+    </SessionProvider>
+  
   );
 }

@@ -1,7 +1,13 @@
+import Container from "@/components/Container";
 
 
 export default function Home() {
   return (
-    <div>Hello word</div>
+    <Container>
+      <div>Hello word</div>
+
+    </Container>
+    
+
   );
 }

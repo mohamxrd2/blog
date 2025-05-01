@@ -59,19 +59,6 @@ export default function RegisterForm() {
     >
       <Hedding title="Create account to Bog dev" center lg />
 
-      {/* Affichage Erreur ou Succès avec style moderne */}
-      {serverError && (
-        <div className="flex items-center justify-center gap-2 bg-red-50 border border-red-300 text-red-700 px-4 py-3 rounded-lg text-sm shadow-md animate-fade-in">
-          <span>{serverError}</span>
-        </div>
-      )}
-
-      {serverSuccess && (
-        <div className="flex items-center justify-center gap-2 bg-green-50 border border-green-300 text-green-700 px-4 py-3 rounded-lg text-sm shadow-md animate-fade-in">
-          <span>{serverSuccess}</span>
-        </div>
-      )}
-
       <FormField
         id="name"
         register={register}
@@ -106,6 +93,19 @@ export default function RegisterForm() {
         outlined={true}
         iconType={<LogInIcon size={18} />}
       />
+
+      {/* Affichage Erreur ou Succès avec style moderne */}
+      {serverError && (
+        <div className="flex items-center justify-center gap-2 bg-red-50 border border-red-300 text-red-700 px-4 py-3 rounded-lg text-sm shadow-md animate-fade-in">
+          <span>{serverError}</span>
+        </div>
+      )}
+
+      {serverSuccess && (
+        <div className="flex items-center justify-center gap-2 bg-green-50 border border-green-300 text-green-700 px-4 py-3 rounded-lg text-sm shadow-md animate-fade-in">
+          <span>{serverSuccess}</span>
+        </div>
+      )}
 
       <div className="flex justify-center mb-4">Or</div>
 

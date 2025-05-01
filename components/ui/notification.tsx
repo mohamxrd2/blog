@@ -7,12 +7,13 @@ const Notification = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="relative p-2 rounded-full hover:bg-accent transition">
-          <div className="absolute -top-1 -right-1 bg-rose-500 h-5 w-5 rounded-full flex items-center justify-center text-xs text-white">
-            5
-          </div>
-          <Bell size={24} className="text-foreground" />
-        </button>
+      <button className="relative group p-2 rounded-full hover:bg-muted transition-colors duration-200">
+  <div className="absolute -top-1 -right-1 bg-rose-600 h-5 w-5 rounded-full flex items-center justify-center text-xs text-white font-semibold shadow-md group-hover:scale-110 transition-transform">
+    5
+  </div>
+  <Bell size={24} className="text-foreground transition-colors group-hover:text-primary" />
+</button>
+
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[320px] p-2">
         <div className="flex justify-between items-center mb-2">
